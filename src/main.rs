@@ -24,8 +24,8 @@ async fn main() {
 async fn get_tenant_info() -> Result<reqwest::StatusCode,reqwest::Error> {
 
     // Step 1: get needed variables 
-    let file = std::fs::read_to_string(String::from("appsettings.json")).expect("Failed to open file");
-    let appsettings: AppSettings = serde_json::from_str(&file).expect("appsettings file could not be parsed");
+    let file_string = std::fs::read_to_string(String::from("appsettings.json")).expect("Failed to open file");
+    let appsettings: AppSettings = serde_json::from_str(&file_string).expect("appsettings file could not be parsed");
 
     let client = reqwest::Client::new();
 
@@ -38,7 +38,7 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode,reqwest::Error> {
         .text()
         .await?;
 
-    let wellknown_json: Value = serde_json::from_str(&wellknown_info).unwrap();
+    let wellknown_json: Value = serde_json::from_str(&wellknown_info).expect("could not parse wellknown response to a json object");
     let token_endpoint = &wellknown_json["token_endpoint"].to_string().replace("\"","");
 
     // Step 3: use the client ID and Secret to get the needed bearer token
@@ -54,7 +54,7 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode,reqwest::Error> {
         .text()
         .await?;
 
-    let token_info_json: Value = serde_json::from_str(&token_info).unwrap();
+    let token_info_json: Value = serde_json::from_str(&token_info).expect("could not parse token endpoint response to a json object");
     let access_token = &token_info_json["access_token"].to_string().replace("\"","");
 
     // Step 4: test token by calling the base tenant endpoint
