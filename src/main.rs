@@ -16,6 +16,12 @@ struct AppSettings{
 
 #[tokio::main]
 async fn main() {
+    println!("{}", get_tenant_info().await.unwrap_or_else(|error| {
+        panic!("Problem obtaining tenant info: {:?}", error);
+    }));
+}
+
+async fn get_tenant_info() -> Result<StatusCode,reqwest::Error> {
 
     // Step 1: get needed variables 
     let file = std::fs::read_to_string(String::from("appsettings.json")).expect("Failed to open file");
@@ -28,11 +34,9 @@ async fn main() {
     
     let wellknown_info = client.get(wellknown_endpoint)
         .send()
-        .await
-        .unwrap()
+        .await?
         .text()
-        .await
-        .unwrap();
+        .await?;
 
     let wellknown_json: Value = serde_json::from_str(&wellknown_info).unwrap();
     let token_endpoint = &wellknown_json["token_endpoint"].to_string().replace("\"","");
@@ -46,11 +50,9 @@ async fn main() {
     let token_info = client.post(token_endpoint)
         .form(&params)
         .send()
-        .await
-        .unwrap()
+        .await?
         .text()
-        .await
-        .unwrap();
+        .await?;
 
     let token_info_json: Value = serde_json::from_str(&token_info).unwrap();
     let access_token = &token_info_json["access_token"].to_string().replace("\"","");
@@ -62,9 +64,7 @@ async fn main() {
     let tenant_info = client.get(tenant_endpoint)
         .header(header::AUTHORIZATION, auth_header)
         .send()
-        .await
-        .unwrap();
+        .await?;
     
-    // test it by making sure we got a valid http status code
-    assert_eq!(tenant_info.status(), StatusCode::OK);
+    Ok(tenant_info.status())
 }
