@@ -1,5 +1,5 @@
 use reqwest;
-use reqwest::{header, StatusCode};
+use reqwest::header;
 use serde::Deserialize;
 use serde_json::Value;
 use std::collections::HashMap;
@@ -21,7 +21,7 @@ async fn main() {
     }));
 }
 
-async fn get_tenant_info() -> Result<StatusCode,reqwest::Error> {
+async fn get_tenant_info() -> Result<reqwest::StatusCode,reqwest::Error> {
 
     // Step 1: get needed variables 
     let file = std::fs::read_to_string(String::from("appsettings.json")).expect("Failed to open file");
@@ -67,4 +67,18 @@ async fn get_tenant_info() -> Result<StatusCode,reqwest::Error> {
         .await?;
     
     Ok(tenant_info.status())
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[tokio::test]
+    async fn tenant_info_works() {
+        let resp = crate::get_tenant_info().await;
+
+        match resp {
+            Ok(status_code) => assert_eq!(status_code, reqwest::StatusCode::OK),
+            Err(error) => panic!("Problem obtaining tenant info: {:?}", error),
+        }
+    }
 }
