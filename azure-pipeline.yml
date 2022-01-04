@@ -61,5 +61,5 @@ jobs:
 
       - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
         parameters:
+          skip: true
           skipPolaris: true
-
