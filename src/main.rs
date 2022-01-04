@@ -17,9 +17,7 @@ struct AppSettings {
 async fn main() {
     println!(
         "{}",
-        get_tenant_info().await.unwrap_or_else(|error| {
-            panic!("Problem obtaining tenant info: {:?}", error);
-        })
+        get_tenant_info().await.expect("Problem obtaining tenant info")
     );
 }
 
