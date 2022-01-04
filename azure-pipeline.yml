@@ -46,10 +46,9 @@ jobs:
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Install Rust'
 
-      - script: source $HOME/.cargo/env
-        displayName: 'Set environmental variable'
-
-      - script: cargo test --all
+      - script: |
+          source $HOME/.cargo/env
+          cargo test --all
         displayName: 'Run tests'
 
       - task: PublishTestResults@2
