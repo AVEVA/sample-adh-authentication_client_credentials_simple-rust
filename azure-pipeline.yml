@@ -60,4 +60,6 @@ jobs:
         condition: always()
 
       - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
-      
+        parameters:
+          skipPolaris: true
+
