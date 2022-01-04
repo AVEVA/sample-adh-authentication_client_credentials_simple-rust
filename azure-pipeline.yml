@@ -59,7 +59,6 @@ jobs:
         displayName: 'Publish test results'
         condition: always()
 
-      - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
-        parameters:
-          skip: true
-          skipPolaris: true
+  - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
+    parameters:
+      skipPolaris: true
