@@ -46,7 +46,9 @@ jobs:
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Install Rust'
 
-      - script: sudo apt-get install gcc
+      - script: |
+          sudo apt update
+          sudo apt-get install gcc
         displayName: 'Install linker'
 
       - script: |
