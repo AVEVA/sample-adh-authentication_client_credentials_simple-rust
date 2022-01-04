@@ -35,7 +35,6 @@ variables:
 
 jobs:
   - job: Tests
-
     pool:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals Linux
