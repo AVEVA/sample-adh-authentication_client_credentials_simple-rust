@@ -46,6 +46,9 @@ jobs:
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Install Rust'
 
+      - script: sudo apt install gcc-multilib
+        displayName: 'Install linker'
+
       - script: |
           source $HOME/.cargo/env
           cargo test --all
