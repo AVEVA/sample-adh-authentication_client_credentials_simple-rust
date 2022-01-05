@@ -1,5 +1,4 @@
 use serde::Deserialize;
-use serde_json::Value;
 use std::collections::HashMap;
 
 #[derive(Debug, Deserialize)]
@@ -12,11 +11,23 @@ struct AppSettings {
     client_secret: String,
 }
 
+#[derive(Deserialize)]
+struct WellKnownInfo {
+    token_endpoint: String,
+}
+
+#[derive(Deserialize)]
+struct TokenInfo {
+    access_token: String,
+}
+
 #[tokio::main]
 async fn main() {
     println!(
         "{}",
-        get_tenant_info().await.expect("Problem obtaining tenant info")
+        get_tenant_info()
+            .await
+            .expect("Problem obtaining tenant info")
     );
 }
 
@@ -35,13 +46,7 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode, reqwest::Error> {
         appsettings.resource
     );
 
-    let wellknown_info = client.get(wellknown_endpoint).send().await?.text().await?;
-
-    let wellknown_json: Value = serde_json::from_str(&wellknown_info)
-        .expect("could not parse wellknown response to a json object");
-    let token_endpoint = &wellknown_json["token_endpoint"]
-        .to_string()
-        .replace("\"", "");
+    let wellknown_info: WellKnownInfo = client.get(wellknown_endpoint).send().await?.json().await?;
 
     // Step 3: use the client ID and Secret to get the needed bearer token
     let mut params = HashMap::new();
@@ -49,19 +54,13 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode, reqwest::Error> {
     params.insert("client_secret", appsettings.client_secret);
     params.insert("grant_type", "client_credentials".to_string());
 
-    let token_info = client
-        .post(token_endpoint)
+    let token_info: TokenInfo = client
+        .post(wellknown_info.token_endpoint)
         .form(&params)
         .send()
         .await?
-        .text()
+        .json()
         .await?;
-
-    let token_info_json: Value = serde_json::from_str(&token_info)
-        .expect("could not parse token endpoint response to a json object");
-    let access_token = &token_info_json["access_token"]
-        .to_string()
-        .replace("\"", "");
 
     // Step 4: test token by calling the base tenant endpoint
     let tenant_endpoint = format!(
@@ -71,7 +70,7 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode, reqwest::Error> {
 
     let tenant_info = client
         .get(tenant_endpoint)
-        .bearer_auth(&access_token)
+        .bearer_auth(token_info.access_token)
         .send()
         .await?;
 
@@ -83,7 +82,9 @@ mod tests {
 
     #[tokio::test]
     async fn tenant_info_works() {
-        let status_code = crate::get_tenant_info().await.expect("Problem obtaining tenant info");
+        let status_code = crate::get_tenant_info()
+            .await
+            .expect("Problem obtaining tenant info");
         assert_eq!(status_code, reqwest::StatusCode::OK);
     }
 }
