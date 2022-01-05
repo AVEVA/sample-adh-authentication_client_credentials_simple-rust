@@ -1,4 +1,3 @@
-use reqwest::header;
 use serde::Deserialize;
 use serde_json::Value;
 use std::collections::HashMap;
@@ -69,11 +68,10 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode, reqwest::Error> {
         "{}/api/{}/Tenants/{}",
         appsettings.resource, appsettings.api_version, appsettings.tenant_id
     );
-    let auth_header = format!("Bearer {}", &access_token);
 
     let tenant_info = client
         .get(tenant_endpoint)
-        .header(header::AUTHORIZATION, auth_header)
+        .bearer_auth(&access_token)
         .send()
         .await?;
 
@@ -85,11 +83,7 @@ mod tests {
 
     #[tokio::test]
     async fn tenant_info_works() {
-        let resp = crate::get_tenant_info().await;
-
-        match resp {
-            Ok(status_code) => assert_eq!(status_code, reqwest::StatusCode::OK),
-            Err(error) => panic!("Problem obtaining tenant info: {:?}", error),
-        }
+        let status_code = crate::get_tenant_info().await.expect("Problem obtaining tenant info");
+        assert_eq!(status_code, reqwest::StatusCode::OK);
     }
 }
