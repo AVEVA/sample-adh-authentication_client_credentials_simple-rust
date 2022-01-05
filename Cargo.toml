@@ -7,7 +7,6 @@ authors = ["OSIsoft, LLC <samples@osisoft.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-futures = "0.3"
 reqwest = "0.11.8"
 serde = { version = "1.0.117", features = ["derive"] }
 serde_json = "1.0.59"
