@@ -4,6 +4,7 @@ use std::collections::HashMap;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 struct AppSettings {
+    // This sample requires these variables from the appsettings.json file
     resource: String,
     api_version: String,
     tenant_id: String,
@@ -13,11 +14,14 @@ struct AppSettings {
 
 #[derive(Deserialize)]
 struct WellKnownInfo {
+    // When reaching the .well-known endpoint, we only need to know the token endpoint
     token_endpoint: String,
 }
 
 #[derive(Deserialize)]
 struct TokenInfo {
+    // When reaching the token endpoint, we only need to know the access token.
+    // A more full featured sample would also handle the expiration time to allow for token reuse across multiple requests
     access_token: String,
 }
 
