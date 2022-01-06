@@ -56,7 +56,7 @@ cargo test
 
 ---
 
-Tested against Rust 1.24.3
+Tested against Rust 1.24.3  
 
 For the main OCS Authentication samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/AUTHENTICATION.md)  
 For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
