@@ -41,7 +41,7 @@ jobs:
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'TenantId, ClientId, ClientSecret'
+          secrets: 'TenantId, ClientId, ClientSecret, Resource'
 
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Install Rust'
