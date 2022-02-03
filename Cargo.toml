@@ -1,0 +1,13 @@
+[package]
+name = "adh-client-creds-rust"
+version = "1.0.0"
+edition = "2021"
+authors = ["AVEVA <samples@aveva.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11.8", features = ["json"] }
+serde = { version = "1.0.117", features = ["derive"] }
+serde_json = "1.0.59"
+tokio = { version = "1.15", features = ["full"] }
