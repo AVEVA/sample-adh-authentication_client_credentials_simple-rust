@@ -34,7 +34,7 @@ variables:
     value: Auth-CC_Rust
 
 jobs:
-  - job: Tests and Code Analysis
+  - job: Tests_and_Code_Analysis
     pool:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals Linux
