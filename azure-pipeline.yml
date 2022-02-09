@@ -34,7 +34,7 @@ variables:
     value: Auth-CC_Rust
 
 jobs:
-  - job: Tests
+  - job: Tests and Code Analysis
     pool:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals Linux
@@ -66,14 +66,9 @@ jobs:
         displayName: 'Publish test results'
         condition: always()
 
-  - job: Code_Analysis
-    pool:
-      name: 00-OSIManaged-Containers
-      demands: Agent.OS -equals Linux
-    steps:
       - script: cargo clippy
         failOnStderr: true
-        displayName: Run analysis
+        displayName: Code Analysis
 
   - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
     parameters:
