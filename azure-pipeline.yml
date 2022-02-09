@@ -66,7 +66,9 @@ jobs:
         displayName: 'Publish test results'
         condition: always()
 
-      - script: cargo clippy
+      - script: |
+          source $HOME/.cargo/env
+          cargo clippy
         failOnStderr: true
         displayName: Code Analysis
 
