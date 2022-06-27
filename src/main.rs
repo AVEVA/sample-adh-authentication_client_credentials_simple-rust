@@ -53,7 +53,7 @@ async fn get_tenant_info() -> Result<reqwest::StatusCode, reqwest::Error> {
     let wellknown_info: WellKnownInfo = client.get(wellknown_endpoint).send().await?.json().await?;
 
     // Step 3: use the client ID and Secret to get the needed bearer token
-    let mut params = HashMap::new();
+    let mut params = std::collections::HashMap::new();
     params.insert("client_id", appsettings.client_id);
     params.insert("client_secret", appsettings.client_secret);
     params.insert("grant_type", "client_credentials".to_string());
@@ -89,6 +89,6 @@ mod tests {
         let status_code = crate::get_tenant_info()
             .await
             .expect("Problem obtaining tenant info");
-        assert_eq!(status_code, reqwest::StatusCode::Forbidden);
+        assert_eq!(status_code, reqwest::StatusCode::Ok);
     }
 }
