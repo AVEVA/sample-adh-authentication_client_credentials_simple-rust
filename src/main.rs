@@ -89,6 +89,6 @@ mod tests {
         let status_code = crate::get_tenant_info()
             .await
             .expect("Problem obtaining tenant info");
-        assert_eq!(status_code, reqwest::StatusCode::Forbidden);
+        assert_eq!(status_code, reqwest::StatusCode::OK);
     }
 }
