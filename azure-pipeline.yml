@@ -55,15 +55,12 @@ jobs:
           source $HOME/.cargo/env
           cargo test --all
         displayName: 'Run tests'
+        condition: always()
 
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: JUnit
-          testResultsFiles: '*.xml'
-          failTaskOnFailedTests: true
-          searchFolder: '$(Build.SourcesDirectory)/TestResults'
-          testRunTitle: '$(Agent.JobName) on Linux'
-        displayName: 'Publish test results'
+      - script: |
+          source $HOME/.cargo/env
+          cargo clippy --all
+        displayName: 'Run clippy'
         condition: always()
 
   - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
