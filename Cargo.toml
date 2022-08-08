@@ -1,6 +1,6 @@
 [package]
 name = "adh-client-creds-rust"
-version = "1.0.2"
+version = "1.0.4"
 edition = "2021"
 authors = ["AVEVA <samples@osisoft.com>"]
 
