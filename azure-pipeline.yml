@@ -30,17 +30,22 @@ resources:
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
-  - name: BLACK_DUCK_PROJECT_NAME
+  - name: analysisProject
     value: Auth-CC_Rust
-  - name: POLARIS_PROJECT_NAME
-    value: Auth-CC_Rust
+
+parameters:
+  - name: pool
+    default: 00-OSIManaged-Containers
+  - name: containerDemands
+    type: object
+    default: ['Agent.OS -equals Linux']
 
 jobs:
   - job: Tests
     condition: ne(variables['Build.Reason'], 'Schedule')
     pool:
-      name: 00-OSIManaged-Containers
-      demands: Agent.OS -equals Linux
+      name: ${{ parameters.pool }}
+      demands: ${{ parameters.containerDemands }}
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
