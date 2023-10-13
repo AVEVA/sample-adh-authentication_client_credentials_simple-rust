@@ -1,6 +1,6 @@
 # AVEVA Data Hub Client Credentials Rust Sample
 
-**Version:** 1.0.6
+**Version:** 1.0.7
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-authentication_client_credentials_simple-rust?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4476&branchName=main)
 
