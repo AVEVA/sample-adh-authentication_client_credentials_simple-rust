@@ -1,8 +1,8 @@
-# AVEVA Data Hub Client Credentials Rust Sample
+# CONNECT data services Client Credentials Rust Sample
 
 **Version:** 1.0.7
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-authentication_client_credentials_simple-rust?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4476&branchName=main)
+[![Build Status](https://dev.azure.com/AVEVA-VSTS/Cloud%20Platform/_apis/build/status%2Fproduct-readiness%2FADH%2FAVEVA.sample-adh-authentication_client_credentials_simple-rust?repoName=AVEVA%2Fsample-adh-authentication_client_credentials_simple-rust&branchName=main)](https://dev.azure.com/AVEVA-VSTS/Cloud%20Platform/_build/latest?definitionId=16191&repoName=AVEVA%2Fsample-adh-authentication_client_credentials_simple-rust&branchName=main)
 
 Developed against Rust 1.24.3.
 
@@ -10,14 +10,14 @@ Developed against Rust 1.24.3.
 
 - Rust 1.24+
     - A linker will need to also be installed. This sample was built using gcc
-- Register a [Client-Credentials Client](https://datahub.connect.aveva.com/clients) in your AVEVA Data Hub tenant and create a client secret to use in the configuration of this sample. ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU))
+- Register a [Client-Credentials Client](https://datahub.connect.aveva.com/clients) in your CONNECT data services tenant and create a client secret to use in the configuration of this sample. ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU))
   - __NOTE__: This sample only requires the `Tenant Member` role to run successfully 
     - see: ['Authorization Allowed for these roles' in the documentation](https://docs.osisoft.com/bundle/ocs/page/api-reference/tenant/tenant-tenants.html#get-tenant) 
   - It is strongly advised to not elevate the permissions of a client beyond what is necessary.
 
 ## About this sample
 
-This sample is meant to be very simple and straightforward to show how you can use common Rust library calls to authenticate against ADH.  In a more complete application you should reuse the bearer token as appropriate and only reissue a new token when it is about to timeout.  
+This sample is meant to be very simple and straightforward to show how you can use common Rust library calls to authenticate against Cds.  In a more complete application you should reuse the bearer token as appropriate and only reissue a new token when it is about to timeout.  
 
 Steps:
 1. Get needed variables
@@ -29,7 +29,7 @@ Steps:
 
 The sample is configured using the file [appsettings.placeholder.json](appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
-AVEVA Data Hub is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your ADH tenant.
+CONNECT data services is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your Cds tenant.
 
 ```json
 {
@@ -61,6 +61,6 @@ cargo test
 
 Tested against Rust 1.24.3  
 
-For the main ADH Authentication samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/AUTHENTICATION.md)  
-For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
-For the main AVEVA samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main Cds Authentication samples page [ReadMe](https://github.com/AVEVA/AVEVA-Samples-CloudOperations/blob/main/docs/AUTHENTICATION.md)  
+For the main Cds samples page [ReadMe](https://github.com/AVEVA/AVEVA-Samples-CloudOperations)  
+For the main AVEVA samples page [ReadMe](https://github.com/AVEVA/AVEVA-Samples)
